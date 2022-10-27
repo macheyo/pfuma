@@ -38,7 +38,7 @@ object NavigationModel {
         NavigationModelItem.NavMenuItem(
             id = INBOX_ID,
             icon = R.drawable.ic_twotone_inbox,
-            titleRes = R.string.navigation_inbox,
+            titleRes = R.string.navigation_sales,
             checked = false,
             mailbox = Mailbox.INBOX
         ),

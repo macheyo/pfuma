@@ -81,7 +81,7 @@ class EmailSwipeActionDrawable(context: Context) : Drawable() {
     private val dur = context.resources.getInteger(R.integer.reply_motion_duration_medium)
     private val interp = context.themeInterpolator(R.attr.motionInterpolatorPersistent)
 
-    override fun onBoundsChange(bounds: Rect?) {
+    override fun onBoundsChange(bounds: Rect) {
         if (bounds == null)  return
         update()
     }
@@ -106,7 +106,7 @@ class EmailSwipeActionDrawable(context: Context) : Drawable() {
 
     override fun isStateful(): Boolean = true
 
-    override fun onStateChange(state: IntArray?): Boolean {
+    override fun onStateChange(state: IntArray): Boolean {
         val initialProgress = progress
         val newProgress = if (state?.contains(android.R.attr.state_activated) == true) {
             1F
@@ -164,6 +164,9 @@ class EmailSwipeActionDrawable(context: Context) : Drawable() {
         circlePaint.alpha = alpha
     }
 
+    @Deprecated("Deprecated in Java",
+        ReplaceWith("PixelFormat.TRANSLUCENT", "android.graphics.PixelFormat")
+    )
     override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 
     override fun setColorFilter(filter: ColorFilter?) {

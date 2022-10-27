@@ -36,6 +36,7 @@
         <!-- TODO: Set MaterialCardView transition name. -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/email_card_view"
+            android:transitionName="@string/email_card_detail_transition_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
