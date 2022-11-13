@@ -31,8 +31,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.materialstudies.reply.R
-import com.materialstudies.reply.data.Email
-import com.materialstudies.reply.data.EmailStore
+import com.materialstudies.reply.data.Transaction
+import com.materialstudies.reply.data.TransactionStore
 import com.materialstudies.reply.databinding.FragmentHomeBinding
 import com.materialstudies.reply.ui.MainActivity
 import com.materialstudies.reply.ui.MenuBottomSheetDialogFragment
@@ -41,13 +41,13 @@ import com.materialstudies.reply.ui.nav.NavigationModel
 /**
  * A [Fragment] that displays a list of emails.
  */
-class HomeFragment : Fragment(), EmailAdapter.EmailAdapterListener {
+class HomeFragment : Fragment(), TransactionAdapter.TransactionAdapterListener {
 
     private val args: HomeFragmentArgs by navArgs()
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val emailAdapter = EmailAdapter(this)
+    private val transactionAdapter = TransactionAdapter(this)
 
     // An on back pressed callback that handles replacing any non-Inbox HomeFragment with inbox
     // on back pressed.
@@ -91,19 +91,19 @@ class HomeFragment : Fragment(), EmailAdapter.EmailAdapterListener {
         binding.recyclerView.apply {
             val itemTouchHelper = ItemTouchHelper(ReboundingSwipeActionCallback())
             itemTouchHelper.attachToRecyclerView(this)
-            adapter = emailAdapter
+            adapter = transactionAdapter
         }
-        binding.recyclerView.adapter = emailAdapter
+        binding.recyclerView.adapter = transactionAdapter
 
-        EmailStore.getEmails(args.mailbox).observe(viewLifecycleOwner) {
-            emailAdapter.submitList(it)
+        TransactionStore.getTransactions(args.mailbox).observe(viewLifecycleOwner) {
+            transactionAdapter.submitList(it)
         }
     }
 
-    override fun onEmailClicked(cardView: View, email: Email) {
+    override fun onEmailClicked(cardView: View, transaction: Transaction) {
         val emailCardDetailTransitionName = getString(R.string.email_card_detail_transition_name)
         val extras = FragmentNavigatorExtras(cardView to emailCardDetailTransitionName)
-        val directions = HomeFragmentDirections.actionHomeFragmentToEmailFragment(email.id)
+        val directions = HomeFragmentDirections.actionHomeFragmentToEmailFragment(transaction.id)
         findNavController().navigate(directions, extras)
         exitTransition = MaterialElevationScale(false).apply {
             duration = resources.getInteger(R.integer.reply_motion_duration_large).toLong()
@@ -113,7 +113,7 @@ class HomeFragment : Fragment(), EmailAdapter.EmailAdapterListener {
         }
     }
 
-    override fun onEmailLongPressed(email: Email): Boolean {
+    override fun onEmailLongPressed(transaction: Transaction): Boolean {
         MenuBottomSheetDialogFragment
           .newInstance(R.menu.email_bottom_sheet_menu)
           .show(parentFragmentManager, null)
@@ -121,11 +121,11 @@ class HomeFragment : Fragment(), EmailAdapter.EmailAdapterListener {
         return true
     }
 
-    override fun onEmailStarChanged(email: Email, newValue: Boolean) {
-        EmailStore.update(email.id) { isStarred = newValue }
+    override fun onEmailStarChanged(transaction: Transaction, newValue: Boolean) {
+        TransactionStore.update(transaction.id) { isStarred = newValue }
     }
 
-    override fun onEmailArchived(email: Email) {
-        EmailStore.delete(email.id)
+    override fun onEmailArchived(transaction: Transaction) {
+        TransactionStore.delete(transaction.id)
     }
 }

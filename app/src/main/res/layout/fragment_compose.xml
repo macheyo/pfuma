@@ -19,7 +19,7 @@
     <data>
         <variable
             name="email"
-            type="com.materialstudies.reply.data.Email" />
+            type="com.materialstudies.reply.data.Transaction" />
         <variable
             name="focusedRecipient"
             type="com.materialstudies.reply.data.Account" />
@@ -199,29 +199,6 @@
                     android:gravity="top"
                     android:textAppearance="?attr/textAppearanceBody1"
                     app:lineHeight="24sp" />
-
-                <SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:iconifiedByDefault="false"
-                    android:queryHint="@string/search_hint"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recipient_divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/grid_2"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintTop_toBottomOf="@id/recipient_divider"
-                    />
-
 
                 <!-- An invisible scrim that captures click events when a chip has been expanded.-->
                 <View

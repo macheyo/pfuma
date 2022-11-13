@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.materialstudies.reply.ui.email
+package com.materialstudies.reply.ui.transaction
 
 import android.graphics.Color
 import android.os.Bundle
@@ -27,8 +27,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.transition.MaterialContainerTransform
 import com.materialstudies.reply.R
-import com.materialstudies.reply.data.EmailStore
-import com.materialstudies.reply.databinding.FragmentEmailBinding
+import com.materialstudies.reply.data.TransactionStore
+import com.materialstudies.reply.databinding.FragmentTransactionBinding
 import com.materialstudies.reply.util.themeColor
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -37,13 +37,13 @@ private const val MAX_GRID_SPANS = 3
 /**
  * A [Fragment] which displays a single, full email.
  */
-class EmailFragment : Fragment() {
+class TransactionFragment : Fragment() {
 
-    private val args: EmailFragmentArgs by navArgs()
-    private val emailId: Long by lazy(NONE) { args.emailId }
+    private val args: TransactionFragmentArgs by navArgs()
+    private val transactionId: Long by lazy(NONE) { args.transactionId}
 
-    private lateinit var binding: FragmentEmailBinding
-    private val attachmentAdapter = EmailAttachmentGridAdapter(MAX_GRID_SPANS)
+    private lateinit var binding: FragmentTransactionBinding
+    private val attachmentAdapter = TransactionAttachmentGridAdapter(MAX_GRID_SPANS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class EmailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentEmailBinding.inflate(inflater, container, false)
+        binding = FragmentTransactionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -71,14 +71,14 @@ class EmailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val email = EmailStore.get(emailId)
-        if (email == null) {
+        val transaction = TransactionStore.get(transactionId)
+        if (transaction == null) {
             showError()
             return
         }
 
         binding.run {
-            this.email = email
+            this.transaction = transaction
 
             // Set up the staggered/masonry grid recycler
             attachmentRecyclerView.layoutManager = GridLayoutManager(
@@ -88,7 +88,7 @@ class EmailFragment : Fragment() {
                 spanSizeLookup = attachmentAdapter.variableSpanSizeLookup
             }
             attachmentRecyclerView.adapter = attachmentAdapter
-            attachmentAdapter.submitList(email.attachments)
+            attachmentAdapter.submitList(transaction.attachments)
         }
     }
 

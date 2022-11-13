@@ -23,12 +23,12 @@ import com.materialstudies.reply.R
 import com.materialstudies.reply.ui.home.Mailbox
 
 /**
- * A static data store of [Email]s.
+ * A static data store of [Transaction]s.
  */
-object EmailStore {
+object TransactionStore {
 
-    private val allEmails = mutableListOf(
-        Email(
+    private val allTransactions = mutableListOf(
+        Transaction(
             0L,
             AccountStore.getContactAccountById(9L),
             listOf(AccountStore.getDefaultUserAccount()),
@@ -42,7 +42,7 @@ object EmailStore {
             """.trimIndent(),
             isStarred = true
         ),
-        Email(
+        Transaction(
             1L,
             AccountStore.getContactAccountById(6L),
             listOf(AccountStore.getDefaultUserAccount()),
@@ -57,21 +57,21 @@ object EmailStore {
                 Ali
             """.trimIndent()
         ),
-        Email(
+        Transaction(
             2L,
             AccountStore.getContactAccountById(5L),
             listOf(AccountStore.getDefaultUserAccount()),
             "Bonjour from Paris",
             "Here are some great shots from my trip...",
             listOf(
-                EmailAttachment(R.drawable.paris_1, "Bridge in Paris"),
-                EmailAttachment(R.drawable.paris_2, "Bridge in Paris at night"),
-                EmailAttachment(R.drawable.paris_3, "City street in Paris"),
-                EmailAttachment(R.drawable.paris_4, "Street with bike in Paris")
+                TransactionAttachment(R.drawable.paris_1, "Bridge in Paris"),
+                TransactionAttachment(R.drawable.paris_2, "Bridge in Paris at night"),
+                TransactionAttachment(R.drawable.paris_3, "City street in Paris"),
+                TransactionAttachment(R.drawable.paris_4, "Street with bike in Paris")
             ),
             true
         ),
-        Email(
+        Transaction(
             3L,
             AccountStore.getContactAccountById(8L),
             listOf(AccountStore.getDefaultUserAccount()),
@@ -85,7 +85,7 @@ object EmailStore {
             """.trimIndent(),
             mailbox = Mailbox.SENT
         ),
-        Email(
+        Transaction(
             4L,
             AccountStore.getContactAccountById(11L),
             listOf(
@@ -103,14 +103,14 @@ object EmailStore {
             """.trimIndent(),
             isStarred = true
         ),
-        Email(
+        Transaction(
             5L,
             AccountStore.getContactAccountById(13L),
             listOf(AccountStore.getDefaultUserAccount()),
             "Update to Your Itinerary",
             ""
         ),
-        Email(
+        Transaction(
             6L,
             AccountStore.getContactAccountById(10L),
             listOf(AccountStore.getDefaultUserAccount()),
@@ -119,14 +119,14 @@ object EmailStore {
                 "very quick to put together.",
             mailbox = Mailbox.SENT
         ),
-        Email(
+        Transaction(
             7L,
             AccountStore.getContactAccountById(9L),
             listOf(AccountStore.getDefaultUserAccount()),
             "Delivered",
             "Your shoes should be waiting for you at home!"
         ),
-        Email(
+        Transaction(
           8L,
           AccountStore.getContactAccountById(13L),
           listOf(AccountStore.getDefaultUserAccount()),
@@ -138,7 +138,7 @@ object EmailStore {
           """.trimIndent(),
           mailbox = Mailbox.TRASH
         ),
-        Email(
+        Transaction(
           9L,
           AccountStore.getContactAccountById(10L),
           listOf(AccountStore.getDefaultUserAccount()),
@@ -150,7 +150,7 @@ object EmailStore {
           """.trimIndent(),
           mailbox = Mailbox.DRAFTS
         ),
-        Email(
+        Transaction(
           10L,
           AccountStore.getContactAccountById(5L),
           listOf(AccountStore.getDefaultUserAccount()),
@@ -162,7 +162,7 @@ object EmailStore {
           """.trimIndent(),
           mailbox = Mailbox.TRASH
         ),
-        Email(
+        Transaction(
           10L,
           AccountStore.getContactAccountById(5L),
           listOf(AccountStore.getDefaultUserAccount()),
@@ -174,43 +174,43 @@ object EmailStore {
         )
     )
 
-    private val _emails: MutableLiveData<List<Email>> = MutableLiveData()
+    private val _transactions: MutableLiveData<List<Transaction>> = MutableLiveData()
 
-    private val inbox: LiveData<List<Email>>
-        get() = Transformations.map(_emails) { emails ->
-            emails.filter { it.mailbox == Mailbox.INBOX }
+    private val inbox: LiveData<List<Transaction>>
+        get() = Transformations.map(_transactions) { transactions ->
+            transactions.filter { it.mailbox == Mailbox.INBOX }
         }
 
-    private val starred: LiveData<List<Email>>
-        get() = Transformations.map(_emails) { emails ->
-            emails.filter { it.isStarred }
+    private val starred: LiveData<List<Transaction>>
+        get() = Transformations.map(_transactions) { transactions ->
+            transactions.filter { it.isStarred }
         }
 
-    private val sent: LiveData<List<Email>>
-        get() = Transformations.map(_emails) { emails ->
-            emails.filter { it.mailbox == Mailbox.SENT }
+    private val sent: LiveData<List<Transaction>>
+        get() = Transformations.map(_transactions) { transactions ->
+            transactions.filter { it.mailbox == Mailbox.SENT }
         }
 
-    private val trash: LiveData<List<Email>>
-        get() = Transformations.map(_emails) { emails ->
-            emails.filter { it.mailbox == Mailbox.TRASH }
+    private val trash: LiveData<List<Transaction>>
+        get() = Transformations.map(_transactions) { transactions ->
+            transactions.filter { it.mailbox == Mailbox.TRASH }
         }
 
-    private val spam: LiveData<List<Email>>
-        get() = Transformations.map(_emails) { emails ->
-            emails.filter { it.mailbox == Mailbox.SPAM }
+    private val spam: LiveData<List<Transaction>>
+        get() = Transformations.map(_transactions) { transactions ->
+            transactions.filter { it.mailbox == Mailbox.SPAM }
         }
 
-    private val drafts: LiveData<List<Email>>
-        get() = Transformations.map(_emails) { emails ->
-            emails.filter { it.mailbox == Mailbox.DRAFTS }
+    private val drafts: LiveData<List<Transaction>>
+        get() = Transformations.map(_transactions) { transactions ->
+            transactions.filter { it.mailbox == Mailbox.DRAFTS }
         }
 
     init {
-        _emails.value = allEmails
+        _transactions.value = allTransactions
     }
 
-    fun getEmails(mailbox: Mailbox): LiveData<List<Email>> {
+    fun getTransactions(mailbox: Mailbox): LiveData<List<Transaction>> {
         return when (mailbox) {
             Mailbox.INBOX -> inbox
             Mailbox.STARRED -> starred
@@ -222,28 +222,28 @@ object EmailStore {
     }
 
     /**
-     * Get an [Email] with the given [id].
+     * Get an [Transaction] with the given [id].
      */
-    fun get(id: Long): Email? {
-        return allEmails.firstOrNull { it.id == id }
+    fun get(id: Long): Transaction? {
+        return allTransactions.firstOrNull { it.id == id }
     }
 
     /**
-     * Create a new, blank [Email].
+     * Create a new, blank [Transaction].
      */
-    fun create(): Email {
-        return Email(
+    fun create(): Transaction {
+        return Transaction(
             System.nanoTime(), // Unique ID generation.
             AccountStore.getDefaultUserAccount()
         )
     }
 
     /**
-     * Create a new [Email] that is a reply to the email with the given [replyToId].
+     * Create a new [Transaction] that is a reply to the email with the given [replyToId].
      */
-    fun createReplyTo(replyToId: Long): Email {
+    fun createReplyTo(replyToId: Long): Transaction {
         val replyTo = get(replyToId) ?: return create()
-        return Email(
+        return Transaction(
             id = System.nanoTime(),
             sender = replyTo.recipients.firstOrNull() ?: AccountStore.getDefaultUserAccount(),
             recipients = listOf(replyTo.sender) + replyTo.recipients,
@@ -254,24 +254,24 @@ object EmailStore {
     }
 
     /**
-     * Delete the [Email] with the given [id].
+     * Delete the [Transaction] with the given [id].
      */
     fun delete(id: Long) {
         update(id) { mailbox = Mailbox.TRASH }
     }
 
     /**
-     * Update the [Email] with the given [id] by applying all mutations from [with].
+     * Update the [Transaction] with the given [id] by applying all mutations from [with].
      */
-    fun update(id: Long, with: Email.() -> Unit) {
-        allEmails.find { it.id == id }?.let {
+    fun update(id: Long, with: Transaction.() -> Unit) {
+        allTransactions.find { it.id == id }?.let {
             it.with()
-            _emails.value = allEmails
+            _transactions.value = allTransactions
         }
     }
 
     /**
-     * Get a list of [EmailFolder]s by which [Email]s can be categorized.
+     * Get a list of [TransactionFolder]s by which [Transaction]s can be categorized.
      */
     fun getAllFolders() = listOf(
         "Receipts",

@@ -34,10 +34,9 @@ import com.google.android.material.transition.MaterialElevationScale
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
 import com.materialstudies.reply.R
-import com.materialstudies.reply.data.EmailStore
+import com.materialstudies.reply.data.TransactionStore
 import com.materialstudies.reply.databinding.ActivityMainBinding
 import com.materialstudies.reply.ui.compose.ComposeFragmentDirections
-import com.materialstudies.reply.ui.email.EmailFragmentArgs
 import com.materialstudies.reply.ui.home.HomeFragmentDirections
 import com.materialstudies.reply.ui.home.Mailbox
 import com.materialstudies.reply.ui.nav.AlphaSlideAction
@@ -49,6 +48,7 @@ import com.materialstudies.reply.ui.nav.NavigationAdapter
 import com.materialstudies.reply.ui.nav.NavigationModelItem
 import com.materialstudies.reply.ui.nav.ShowHideFabStateAction
 import com.materialstudies.reply.ui.search.SearchFragmentDirections
+import com.materialstudies.reply.ui.transaction.TransactionFragmentArgs
 import com.materialstudies.reply.util.contentView
 import kotlin.LazyThreadSafetyMode.NONE
 
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(),
 
     // Keep track of the current Email being viewed, if any, in order to pass the correct email id
     // to ComposeFragment when this Activity's FAB is clicked.
-    private var currentEmailId = -1L
+    private var currentTransactionId = -1L
 
     val currentNavigationFragment: Fragment?
         get() = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
@@ -138,20 +138,20 @@ class MainActivity : AppCompatActivity(),
         // BottomAppBar and FAB based on the current destination.
         when (destination.id) {
             R.id.homeFragment -> {
-                currentEmailId = -1
+                currentTransactionId = -1
                 setBottomAppBarForHome(getBottomAppBarMenuForDestination(destination))
             }
-            R.id.emailFragment -> {
-                currentEmailId =
-                    if (arguments == null) -1 else EmailFragmentArgs.fromBundle(arguments).emailId
-                setBottomAppBarForEmail(getBottomAppBarMenuForDestination(destination))
+            R.id.transactionFragment -> {
+                currentTransactionId =
+                    if (arguments == null) -1 else TransactionFragmentArgs.fromBundle(arguments).transactionId
+                setBottomAppBarForTransaction(getBottomAppBarMenuForDestination(destination))
             }
             R.id.composeFragment -> {
-                currentEmailId = -1
+                currentTransactionId = -1
                 setBottomAppBarForCompose()
             }
             R.id.searchFragment -> {
-                currentEmailId = -1
+                currentTransactionId = -1
                 setBottomAppBarForSearch()
             }
         }
@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity(),
         val dest = destination ?: findNavController(R.id.nav_host_fragment).currentDestination
         return when (dest?.id) {
             R.id.homeFragment -> R.menu.bottom_app_bar_home_menu
-            R.id.emailFragment -> R.menu.bottom_app_bar_email_menu
+            R.id.transactionFragment -> R.menu.bottom_app_bar_transaction_menu
             else -> R.menu.bottom_app_bar_home_menu
         }
     }
@@ -180,14 +180,14 @@ class MainActivity : AppCompatActivity(),
             fab.setImageState(intArrayOf(-android.R.attr.state_activated), true)
             bottomAppBar.visibility = View.VISIBLE
             bottomAppBar.replaceMenu(menuRes)
-            fab.contentDescription = getString(R.string.fab_compose_email_content_description)
+            fab.contentDescription = getString(R.string.fab_compose_transaction_content_description)
             bottomAppBarTitle.visibility = View.VISIBLE
             bottomAppBar.performShow()
             fab.show()
         }
     }
 
-    private fun setBottomAppBarForEmail(@MenuRes menuRes: Int) {
+    private fun setBottomAppBarForTransaction(@MenuRes menuRes: Int) {
         binding.run {
             fab.setImageState(intArrayOf(android.R.attr.state_activated), true)
             bottomAppBar.visibility = View.VISIBLE
@@ -235,7 +235,7 @@ class MainActivity : AppCompatActivity(),
         navigateToHome(item.titleRes, item.mailbox)
     }
 
-    override fun onNavEmailFolderClicked(folder: NavigationModelItem.NavEmailFolder) {
+    override fun onNavTransactionFolderClicked(folder: NavigationModelItem.NavTransactionFolder) {
         // Do nothing
     }
 
@@ -246,11 +246,11 @@ class MainActivity : AppCompatActivity(),
                 showDarkThemeMenu()
             }
             R.id.menu_search -> navigateToSearch()
-            R.id.menu_email_star -> {
-                EmailStore.update(currentEmailId) { isStarred = !isStarred }
+            R.id.menu_transaction_star -> {
+                TransactionStore.update(currentTransactionId) { isStarred = !isStarred }
             }
-            R.id.menu_email_delete -> {
-                EmailStore.delete(currentEmailId)
+            R.id.menu_transaction_delete -> {
+                TransactionStore.delete(currentTransactionId)
                 findNavController(R.id.nav_host_fragment).popBackStack()
             }
         }
@@ -283,7 +283,7 @@ class MainActivity : AppCompatActivity(),
                 duration = resources.getInteger(R.integer.reply_motion_duration_large).toLong()
             }
         }
-        val directions = ComposeFragmentDirections.actionGlobalComposeFragment(currentEmailId)
+        val directions = ComposeFragmentDirections.actionGlobalComposeFragment(currentTransactionId)
         findNavController(R.id.nav_host_fragment).navigate(directions)
     }
 
@@ -298,22 +298,6 @@ class MainActivity : AppCompatActivity(),
         }
         val directions = SearchFragmentDirections.actionGlobalSearchFragment()
         findNavController(R.id.nav_host_fragment).navigate(directions)
-    }
-
-    /**
-     * Set this Activity's night mode based on a user's in-app selection.
-     */
-    private fun onDarkThemeMenuItemSelected(itemId: Int): Boolean {
-        val nightMode = when (itemId) {
-            R.id.menu_light -> AppCompatDelegate.MODE_NIGHT_NO
-            R.id.menu_dark -> AppCompatDelegate.MODE_NIGHT_YES
-            R.id.menu_battery_saver -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-            R.id.menu_system_default -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            else -> return false
-        }
-
-        delegate.localNightMode = nightMode
-        return true
     }
 
 }

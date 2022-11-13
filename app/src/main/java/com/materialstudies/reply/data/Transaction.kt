@@ -22,13 +22,13 @@ import com.materialstudies.reply.ui.home.Mailbox
 /**
  * A simple data class to represent an Email.
  */
-data class Email(
+data class Transaction(
     val id: Long,
     val sender: Account,
     val recipients: List<Account> = emptyList(),
     val subject: String = "",
     val body: String = "",
-    val attachments: List<EmailAttachment> = emptyList(),
+    val attachments: List<TransactionAttachment> = emptyList(),
     var isImportant: Boolean = false,
     var isStarred: Boolean = false,
     var mailbox: Mailbox = Mailbox.INBOX
@@ -43,8 +43,8 @@ data class Email(
         .filterNot { AccountStore.isUserAccount(it.uid) }
 }
 
-object EmailDiffCallback : DiffUtil.ItemCallback<Email>() {
-    override fun areItemsTheSame(oldItem: Email, newItem: Email) = oldItem.id == newItem.id
-    override fun areContentsTheSame(oldItem: Email, newItem: Email) = oldItem == newItem
+object TransactionDiffCallback : DiffUtil.ItemCallback<Transaction>() {
+    override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction) = oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction) = oldItem == newItem
 }
 

@@ -20,27 +20,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.materialstudies.reply.data.Email
-import com.materialstudies.reply.data.EmailDiffCallback
-import com.materialstudies.reply.databinding.EmailItemLayoutBinding
+import com.materialstudies.reply.data.Transaction
+import com.materialstudies.reply.data.TransactionDiffCallback
+import com.materialstudies.reply.databinding.TransactionItemLayoutBinding
 
 /**
  * Simple adapter to display Email's in MainActivity.
  */
-class EmailAdapter(
-        private val listener: EmailAdapterListener
-) : ListAdapter<Email, EmailViewHolder>(EmailDiffCallback) {
+class TransactionAdapter(
+        private val listener: TransactionAdapterListener
+) : ListAdapter<Transaction, TransactionViewHolder>(TransactionDiffCallback) {
 
-    interface EmailAdapterListener {
-        fun onEmailClicked(cardView: View, email: Email)
-        fun onEmailLongPressed(email: Email): Boolean
-        fun onEmailStarChanged(email: Email, newValue: Boolean)
-        fun onEmailArchived(email: Email)
+    interface TransactionAdapterListener {
+        fun onEmailClicked(cardView: View, transaction: Transaction)
+        fun onEmailLongPressed(transaction: Transaction): Boolean
+        fun onEmailStarChanged(transaction: Transaction, newValue: Boolean)
+        fun onEmailArchived(transaction: Transaction)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmailViewHolder {
-        return EmailViewHolder(
-            EmailItemLayoutBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
+        return TransactionViewHolder(
+            TransactionItemLayoutBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -49,7 +49,7 @@ class EmailAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: EmailViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }

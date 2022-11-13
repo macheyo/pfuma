@@ -32,8 +32,8 @@ import com.google.android.material.transition.MaterialContainerTransform
 import com.materialstudies.reply.R
 import com.materialstudies.reply.data.Account
 import com.materialstudies.reply.data.AccountStore
-import com.materialstudies.reply.data.Email
-import com.materialstudies.reply.data.EmailStore
+import com.materialstudies.reply.data.Transaction
+import com.materialstudies.reply.data.TransactionStore
 import com.materialstudies.reply.databinding.ComposeRecipientChipBinding
 import com.materialstudies.reply.databinding.FragmentComposeBinding
 import com.materialstudies.reply.util.themeColor
@@ -49,11 +49,11 @@ class ComposeFragment : Fragment() {
     private val args: ComposeFragmentArgs by navArgs()
 
     // The new email being composed.
-    private val composeEmail: Email by lazy(NONE) {
+    private val composeTransaction: Transaction by lazy(NONE) {
         // Get the id of the email being replied to, if any, and either create an new empty email
         // or a new reply email.
         val id = args.replyToEmailId
-        if (id == -1L) EmailStore.create() else EmailStore.createReplyTo(id)
+        if (id == -1L) TransactionStore.create() else TransactionStore.createReplyTo(id)
     }
 
     // Handle closing an expanded recipient card when on back is pressed.
@@ -81,9 +81,9 @@ class ComposeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.run {
             closeIcon.setOnClickListener { findNavController().navigateUp() }
-            email = composeEmail
+            email = composeTransaction
 
-            composeEmail.nonUserAccountRecipients.forEach { addRecipientChip(it) }
+            composeTransaction.nonUserAccountRecipients.forEach { addRecipientChip(it) }
 
             senderSpinner.adapter = ArrayAdapter(
                 senderSpinner.context,
@@ -187,37 +187,4 @@ class ComposeFragment : Fragment() {
         binding.recipientCardView.visibility = View.INVISIBLE
     }
 
-    private fun getProductList(): ArrayList<String> {
-        val list = ArrayList<String>()
-        list.add("Batman")
-        list.add("SpiderMan")
-        list.add("Superman")
-        list.add("Wolverine")
-        list.add("Iron Man")
-        list.add("Wonder Woman")
-        list.add("Captain America")
-        list.add("Thor")
-        list.add("Deadpool")
-        list.add("Batman")
-        list.add("SpiderMan")
-        list.add("Superman")
-        list.add("Wolverine")
-        list.add("Iron Man")
-        list.add("Wonder Woman")
-        list.add("Captain America")
-        list.add("Thor")
-        list.add("Deadpool")
-        list.add("Batman")
-        list.add("SpiderMan")
-        list.add("Superman")
-        list.add("Wolverine")
-        list.add("Iron Man")
-        list.add("Wonder Woman")
-        list.add("Captain America")
-        list.add("Thor")
-        list.add("Deadpool")
-        list.add("Dare Devil")
-
-        return list
-    }
 }

@@ -19,8 +19,8 @@ package com.materialstudies.reply.ui.nav
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.DiffUtil
-import com.materialstudies.reply.data.EmailFolder
-import com.materialstudies.reply.data.EmailFolderDiff
+import com.materialstudies.reply.data.TransactionFolder
+import com.materialstudies.reply.data.TransactionFolderDiff
 import com.materialstudies.reply.ui.home.Mailbox
 
 /**
@@ -46,9 +46,9 @@ sealed class NavigationModelItem {
     data class NavDivider(val title: String) : NavigationModelItem()
 
     /**
-     * A class which is used to show an [EmailFolder] in the [NavigationAdapter].
+     * A class which is used to show an [TransactionFolder] in the [NavigationAdapter].
      */
-    data class NavEmailFolder(val emailFolder: EmailFolder) : NavigationModelItem()
+    data class NavTransactionFolder(val transactionFolder: TransactionFolder) : NavigationModelItem()
 
     object NavModelItemDiff : DiffUtil.ItemCallback<NavigationModelItem>() {
         override fun areItemsTheSame(
@@ -58,8 +58,8 @@ sealed class NavigationModelItem {
             return when {
                 oldItem is NavMenuItem && newItem is NavMenuItem ->
                     oldItem.id == newItem.id
-                oldItem is NavEmailFolder && newItem is NavEmailFolder ->
-                    EmailFolderDiff.areItemsTheSame(oldItem.emailFolder, newItem.emailFolder)
+                oldItem is NavTransactionFolder && newItem is NavTransactionFolder ->
+                    TransactionFolderDiff.areItemsTheSame(oldItem.transactionFolder, newItem.transactionFolder)
                 else -> oldItem == newItem
             }
         }
@@ -73,8 +73,8 @@ sealed class NavigationModelItem {
                      oldItem.icon == newItem.icon &&
                      oldItem.titleRes == newItem.titleRes &&
                      oldItem.checked == newItem.checked
-                oldItem is NavEmailFolder && newItem is NavEmailFolder ->
-                    EmailFolderDiff.areContentsTheSame(oldItem.emailFolder, newItem.emailFolder)
+                oldItem is NavTransactionFolder && newItem is NavTransactionFolder ->
+                    TransactionFolderDiff.areContentsTheSame(oldItem.transactionFolder, newItem.transactionFolder)
                 else -> false
             }
         }

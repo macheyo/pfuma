@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.materialstudies.reply.ui.email
+package com.materialstudies.reply.ui.transaction
 
 import androidx.recyclerview.widget.GridLayoutManager
 import com.materialstudies.reply.R
-import com.materialstudies.reply.ui.common.EmailAttachmentAdapter
+import com.materialstudies.reply.ui.common.TransactionAttachmentAdapter
 import kotlin.random.Random
 
-class EmailAttachmentGridAdapter(
+class TransactionAttachmentGridAdapter(
     private val spans: Int
-) : EmailAttachmentAdapter() {
+) : TransactionAttachmentAdapter() {
 
     /**
      * A [GridLayoutManager.SpanSizeLookup] which randomly assigns a span count to each item
@@ -58,5 +58,5 @@ class EmailAttachmentGridAdapter(
     }
 
     override fun getLayoutIdForPosition(position: Int): Int =
-        R.layout.email_attachment_grid_item_layout
+        R.layout.transaction_attachment_grid_item_layout
 }

@@ -21,10 +21,10 @@
     <data>
         <variable
             name="email"
-            type="com.materialstudies.reply.data.Email" />
+            type="com.materialstudies.reply.data.Transaction" />
         <variable
             name="listener"
-            type="com.materialstudies.reply.ui.home.EmailAdapter.EmailAdapterListener" />
+            type="com.materialstudies.reply.ui.home.TransactionAdapter.TransactionAdapterListener" />
     </data>
 
     <FrameLayout

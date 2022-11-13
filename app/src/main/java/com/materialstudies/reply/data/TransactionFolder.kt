@@ -21,9 +21,9 @@ import androidx.recyclerview.widget.DiffUtil
 /**
  * Alias to represent a folder (a String title) into which emails can be placed.
  */
-typealias EmailFolder = String
+typealias TransactionFolder = String
 
-object EmailFolderDiff : DiffUtil.ItemCallback<EmailFolder>() {
-    override fun areItemsTheSame(oldItem: EmailFolder, newItem: EmailFolder) = oldItem == newItem
-    override fun areContentsTheSame(oldItem: EmailFolder, newItem: EmailFolder) = oldItem == newItem
+object TransactionFolderDiff : DiffUtil.ItemCallback<TransactionFolder>() {
+    override fun areItemsTheSame(oldItem: TransactionFolder, newItem: TransactionFolder) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: TransactionFolder, newItem: TransactionFolder) = oldItem == newItem
 }

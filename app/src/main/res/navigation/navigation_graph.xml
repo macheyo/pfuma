@@ -27,14 +27,14 @@
             android:defaultValue="INBOX" />
         <action
             android:id="@+id/action_homeFragment_to_emailFragment"
-            app:destination="@id/emailFragment" />
+            app:destination="@id/transactionFragment" />
     </fragment>
     <fragment
-        android:id="@+id/emailFragment"
-        android:name="com.materialstudies.reply.ui.email.EmailFragment"
-        android:label="EmailFragment">
+        android:id="@+id/transactionFragment"
+        android:name="com.materialstudies.reply.ui.transaction.TransactionFragment"
+        android:label="TransactionFragment">
         <argument
-            android:name="emailId"
+            android:name="transactionId"
             app:argType="long" />
     </fragment>
     <fragment

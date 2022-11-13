@@ -17,8 +17,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="navEmailFolder"
-            type="com.materialstudies.reply.ui.nav.NavigationModelItem.NavEmailFolder" />
+            name="navTransactionFolder"
+            type="com.materialstudies.reply.ui.nav.NavigationModelItem.NavTransactionFolder" />
         <variable
             name="navListener"
             type="com.materialstudies.reply.ui.nav.NavigationAdapter.NavigationAdapterListener" />
@@ -32,10 +32,10 @@
         android:paddingRight="@dimen/grid_4"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical|start"
-        android:onClick="@{() -> navListener.onNavEmailFolderClicked(navEmailFolder)}"
+        android:onClick="@{() -> navListener.onNavTransactionFolderClicked(navTransactionFolder)}"
         android:ellipsize="end"
         android:lines="1"
-        android:text="@{navEmailFolder.emailFolder}"
+        android:text="@{navTransactionFolder.transactionFolder}"
         android:textColor="@color/color_on_primary_surface_emphasis_medium"
         android:textAppearance="?attr/textAppearanceSubtitle1"
         app:drawableStartCompat="@drawable/ic_twotone_folder"

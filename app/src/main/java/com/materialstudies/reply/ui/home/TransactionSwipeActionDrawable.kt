@@ -43,7 +43,7 @@ import kotlin.math.sin
  * - On activation animating the star's color and scale
  * - On activation animating a colored circle background
  */
-class EmailSwipeActionDrawable(context: Context) : Drawable() {
+class TransactionSwipeActionDrawable(context: Context) : Drawable() {
 
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = context.themeColor(R.attr.colorSecondary)

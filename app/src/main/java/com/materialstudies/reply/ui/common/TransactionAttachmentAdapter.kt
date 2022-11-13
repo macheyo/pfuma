@@ -20,26 +20,26 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.materialstudies.reply.data.EmailAttachment
+import com.materialstudies.reply.data.TransactionAttachment
 
 /**
- * Generic RecyclerView.Adapter to display [EmailAttachment]s.
+ * Generic RecyclerView.Adapter to display [TransactionAttachment]s.
  */
-abstract class EmailAttachmentAdapter : RecyclerView.Adapter<EmailAttachmentViewHolder>() {
+abstract class TransactionAttachmentAdapter : RecyclerView.Adapter<TransactionAttachmentViewHolder>() {
 
-    private var list: List<EmailAttachment> = emptyList()
+    private var list: List<TransactionAttachment> = emptyList()
 
     override fun getItemCount() = list.size
 
     override fun getItemViewType(position: Int) = getLayoutIdForPosition(position)
 
-    fun submitList(attachments: List<EmailAttachment>) {
+    fun submitList(attachments: List<TransactionAttachment>) {
         list = attachments
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmailAttachmentViewHolder {
-        return EmailAttachmentViewHolder(DataBindingUtil.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionAttachmentViewHolder {
+        return TransactionAttachmentViewHolder(DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             viewType,
             parent,
@@ -47,14 +47,14 @@ abstract class EmailAttachmentAdapter : RecyclerView.Adapter<EmailAttachmentView
         ))
     }
 
-    override fun onBindViewHolder(holder: EmailAttachmentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TransactionAttachmentViewHolder, position: Int) {
         holder.bind(list[position])
     }
 
     /**
      * Clients should implement this method to determine what layout is inflated for a given
      * position. The layout must include a data parameter named 'emailAttachment' with a type
-     * of [EmailAttachment].
+     * of [TransactionAttachment].
      */
     abstract fun getLayoutIdForPosition(position: Int): Int
 }

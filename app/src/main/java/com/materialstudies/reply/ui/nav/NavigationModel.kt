@@ -19,7 +19,7 @@ package com.materialstudies.reply.ui.nav
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.materialstudies.reply.R
-import com.materialstudies.reply.data.EmailStore
+import com.materialstudies.reply.data.TransactionStore
 import com.materialstudies.reply.ui.home.Mailbox
 
 /**
@@ -108,7 +108,7 @@ object NavigationModel {
     private fun postListUpdate() {
         val newList = navigationMenuItems +
             (NavigationModelItem.NavDivider("Folders")) +
-            EmailStore.getAllFolders().map { NavigationModelItem.NavEmailFolder(it) }
+            TransactionStore.getAllFolders().map { NavigationModelItem.NavTransactionFolder(it) }
 
         _navigationList.value = newList
     }

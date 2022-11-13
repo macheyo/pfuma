@@ -19,21 +19,21 @@ package com.materialstudies.reply.ui.home
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.materialstudies.reply.R
-import com.materialstudies.reply.data.Email
-import com.materialstudies.reply.databinding.EmailItemLayoutBinding
-import com.materialstudies.reply.ui.common.EmailAttachmentAdapter
+import com.materialstudies.reply.data.Transaction
+import com.materialstudies.reply.databinding.TransactionItemLayoutBinding
+import com.materialstudies.reply.ui.common.TransactionAttachmentAdapter
 import com.materialstudies.reply.util.setTextAppearanceCompat
 import com.materialstudies.reply.util.themeStyle
 import kotlin.math.abs
 
-class EmailViewHolder(
-    private val binding: EmailItemLayoutBinding,
-    listener: EmailAdapter.EmailAdapterListener
+class TransactionViewHolder(
+    private val binding: TransactionItemLayoutBinding,
+    listener: TransactionAdapter.TransactionAdapterListener
 ): RecyclerView.ViewHolder(binding.root), ReboundingSwipeActionCallback.ReboundableViewHolder {
 
-    private val attachmentAdapter = object : EmailAttachmentAdapter() {
+    private val attachmentAdapter = object : TransactionAttachmentAdapter() {
         override fun getLayoutIdForPosition(position: Int): Int
-            = R.layout.email_attachment_preview_item_layout
+            = R.layout.transaction_attachment_preview_item_layout
     }
 
     private val starredCornerSize =
@@ -45,17 +45,17 @@ class EmailViewHolder(
         binding.run {
             this.listener = listener
             attachmentRecyclerView.adapter = attachmentAdapter
-            root.background = EmailSwipeActionDrawable(root.context)
+            root.background = TransactionSwipeActionDrawable(root.context)
         }
     }
 
-    fun bind(email: Email) {
-        binding.email = email
-        binding.root.isActivated = email.isStarred
+    fun bind(transaction: Transaction) {
+        binding.email = transaction
+        binding.root.isActivated = transaction.isStarred
 
         // Set the subject's TextAppearance
         val textAppearance = binding.subjectTextView.context.themeStyle(
-            if (email.isImportant) {
+            if (transaction.isImportant) {
                 R.attr.textAppearanceHeadline4
             } else {
                 R.attr.textAppearanceHeadline5
@@ -66,12 +66,12 @@ class EmailViewHolder(
             textAppearance
         )
 
-        attachmentAdapter.submitList(email.attachments)
+        attachmentAdapter.submitList(transaction.attachments)
 
         // Setting interpolation here controls whether or not we draw the top left corner as
         // rounded or squared. Since all other corners are set to 0dp rounded, they are
         // not affected.
-        val interpolation = if (email.isStarred) 1F else 0F
+        val interpolation = if (transaction.isStarred) 1F else 0F
         updateCardViewTopLeftCornerSize(interpolation)
 
         binding.executePendingBindings()

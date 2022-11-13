@@ -19,7 +19,7 @@ package com.materialstudies.reply.ui.nav
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.materialstudies.reply.databinding.NavDividerItemLayoutBinding
-import com.materialstudies.reply.databinding.NavEmailFolderItemLayoutBinding
+import com.materialstudies.reply.databinding.NavTransactionFolderItemLayoutBinding
 import com.materialstudies.reply.databinding.NavMenuItemLayoutBinding
 
 sealed class NavigationViewHolder<T : NavigationModelItem>(
@@ -52,13 +52,13 @@ sealed class NavigationViewHolder<T : NavigationModelItem>(
     }
 
     class EmailFolderViewHolder(
-        private val binding: NavEmailFolderItemLayoutBinding,
+        private val binding: NavTransactionFolderItemLayoutBinding,
         private val listener: NavigationAdapter.NavigationAdapterListener
-    ) : NavigationViewHolder<NavigationModelItem.NavEmailFolder>(binding.root) {
+    ) : NavigationViewHolder<NavigationModelItem.NavTransactionFolder>(binding.root) {
 
-        override fun bind(navItem: NavigationModelItem.NavEmailFolder) {
+        override fun bind(navItem: NavigationModelItem.NavTransactionFolder) {
             binding.run {
-                navEmailFolder = navItem
+                navTransactionFolder = navItem
                 navListener = listener
                 executePendingBindings()
             }

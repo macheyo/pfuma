@@ -282,8 +282,8 @@ class BottomNavDrawerFragment :
         navigationListeners.forEach { it.onNavMenuItemClicked(item) }
     }
 
-    override fun onNavEmailFolderClicked(folder: NavigationModelItem.NavEmailFolder) {
-        navigationListeners.forEach { it.onNavEmailFolderClicked(folder) }
+    override fun onNavTransactionFolderClicked(folder: NavigationModelItem.NavTransactionFolder) {
+        navigationListeners.forEach { it.onNavTransactionFolderClicked(folder) }
     }
 
     override fun onAccountClicked(account: Account) {

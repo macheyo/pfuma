@@ -20,8 +20,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.materialstudies.reply.databinding.NavDividerItemLayoutBinding
-import com.materialstudies.reply.databinding.NavEmailFolderItemLayoutBinding
 import com.materialstudies.reply.databinding.NavMenuItemLayoutBinding
+import com.materialstudies.reply.databinding.NavTransactionFolderItemLayoutBinding
 
 private const val VIEW_TYPE_NAV_MENU_ITEM = 4
 private const val VIEW_TYPE_NAV_DIVIDER = 6
@@ -35,14 +35,14 @@ class NavigationAdapter(
 
     interface NavigationAdapterListener {
         fun onNavMenuItemClicked(item: NavigationModelItem.NavMenuItem)
-        fun onNavEmailFolderClicked(folder: NavigationModelItem.NavEmailFolder)
+        fun onNavTransactionFolderClicked(folder: NavigationModelItem.NavTransactionFolder)
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
             is NavigationModelItem.NavMenuItem -> VIEW_TYPE_NAV_MENU_ITEM
             is NavigationModelItem.NavDivider -> VIEW_TYPE_NAV_DIVIDER
-            is NavigationModelItem.NavEmailFolder -> VIEW_TYPE_NAV_EMAIL_FOLDER_ITEM
+            is NavigationModelItem.NavTransactionFolder -> VIEW_TYPE_NAV_EMAIL_FOLDER_ITEM
             else -> throw RuntimeException("Unsupported ItemViewType for obj ${getItem(position)}")
         }
     }
@@ -69,7 +69,7 @@ class NavigationAdapter(
                 )
             )
             VIEW_TYPE_NAV_EMAIL_FOLDER_ITEM -> NavigationViewHolder.EmailFolderViewHolder(
-                NavEmailFolderItemLayoutBinding.inflate(
+                NavTransactionFolderItemLayoutBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
